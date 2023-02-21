@@ -1,3 +1,5 @@
+from unittest import main
+
 def add_time(start, duration, option = ""):
     baseMinutes = getMinutesWithListOptPeriod(split_timePeriod(start)[0], period_toMinute(split_timePeriod(start)[1]))
     toAddMinutes = getMinutesWithListOptPeriod(duration)
@@ -72,5 +74,3 @@ def split_hourMinute(time):
 
 def split_timePeriod(timeString):
     return timeString.split(" ")
-
-print(add_time("8:16 PM", "466:02", "tuesday"))

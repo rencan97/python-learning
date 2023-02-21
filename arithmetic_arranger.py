@@ -95,5 +95,3 @@ def obtain_digitAmount(digit):
     if digitTotal < 0:
         digitAmount += 1
     return digitAmount
-
-print(arithmetic_arranger(['11 + 4', '3801 - 2999', '1 + 2', '123 + 49', '1 - 9380']))
