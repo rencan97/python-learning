@@ -1,6 +1,58 @@
+def get_acceptedOperand():
+    acceptedOperand = ["-", "+"]
+    return acceptedOperand
+
+def isOperandNotAccepted(operand):
+    if operand in get_acceptedOperand(): return "Error: Operator must be '+' or '-'."
+    else: return 
+
+def get_listOfParts(string):
+    listOfParts = []
+    splitFactor = " "
+    for entry in range(len(string)):
+        listOfParts.append(string[entry].split(splitFactor))
+    return listOfParts
+
+def get_listOfErrorMessages():
+    errorMessages = ["Error: Numbers must only contain digits.",
+                     "Error: Too many problems.",
+                     "Error: Operator must be '+' or '-'.",
+                     "Error: Numbers cannot be more than four digits."
+                     ]
+    return errorMessages
+
+def get_valueIndexPosition():
+    valueIndexPosition = [0, 2]
+    return valueIndexPosition
+
+def is_valueNotDigit(listOfInputs):
+    for entry in listOfInputs:
+        for index in get_valueIndexPosition():
+            try:
+                int(entry[index])
+            except:
+                return "Error: Numbers must only contain digits."
+    return
+
+def getDigitLimit():
+    digitLimit = 4
+    return digitLimit
+
+def is_valueUnderLimit(listOfInputs):
+    for entry in listOfInputs:
+        for index in get_valueIndexPosition():
+            if int(len(entry[index])) <= getDigitLimit():
+                continue
+            else:
+                return "Error: Numbers cannot be more than four digits."
+    return
+
 def arithmetic_arranger(string, option = False):
-    if len(string) >5:
+    listOfParts = get_listOfParts(string)
+    if (len(string)> 5):
         return "Error: Too many problems."
+    if is_valueNotDigit(listOfParts) in get_listOfErrorMessages(): return is_valueNotDigit(listOfParts)
+    if is_valueUnderLimit(listOfParts) in get_listOfErrorMessages(): return is_valueUnderLimit(listOfParts)
     mostDigitAmount = []
     firstNumberList = []
     secondNumberList = []
@@ -8,22 +60,13 @@ def arithmetic_arranger(string, option = False):
     resultList = []
     for entry in string:
         values = (entry.split(" "))
-        try:
-            int(values[0])
-            int(values[2])
-        except:
-            return "Error: Numbers must only contain digits."
         firstNumberList.append(int(values[0]))
         secondNumberList.append(int(values[2]))
         operandList.append(values[1])
         resultList.append(obtain_result(values))
         mostDigitAmount.append(obtain_digitAmount(max(int(values[0]), int(values[2]))))
-        
-        if values[1] != "+":
-            if values[1] != "-":
-                return "Error: Operator must be '+' or '-'."
-        if int(len(values[0]))> 4 or int(len(values[2])>4):
-            return "Error: Numbers cannot be more than four digits."
+        if values[1] not in get_acceptedOperand():
+            return "Error: Operator must be '+' or '-'."
     line1 = make_line1(mostDigitAmount, firstNumberList)
     line2 = make_line2(mostDigitAmount, secondNumberList, operandList)
     line3 = make_line3(mostDigitAmount)
@@ -33,7 +76,6 @@ def arithmetic_arranger(string, option = False):
         return line1+line2+line3+line4
     else:
         return line1+line2+line3
-
 
 def make_line4(mostDigit, resultList):
     line4 = "\n"
@@ -95,3 +137,5 @@ def obtain_digitAmount(digit):
     if digitTotal < 0:
         digitAmount += 1
     return digitAmount
+
+print("-----------------------------\n" + arithmetic_arranger(['3832 - 2', '123 + 49']))
